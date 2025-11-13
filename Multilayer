@@ -1,0 +1,40 @@
+import numpy as np
+import pandas as pd
+from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPClassifier
+import matplotlib.pyplot as plt
+from sklearn.metrics import classification_report
+
+
+# loading the data from csv to the pandas
+bnotes= pd.read_csv("csvfiles/bank-note-data.csv")
+bnotes.head()
+bnotes.tail()
+bnotes.shape
+bnotes.isnull().sum()
+print(bnotes.head())
+print(bnotes["Class"].unique())
+bnotes.describe(include='all')
+x=bnotes.drop("Class",axis=1)
+y=bnotes["Class"]
+print(x.head(2))
+print(y.head(2))
+
+#splitting the data
+# Splitting the dataset into train and test
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3)
+print(x_train.shape)
+print(y_train.shape)
+# trainning under sklearn
+
+
+mlp = MLPClassifier(hidden_layer_sizes=(3,2),max_iter=500,activation='relu')
+#fitting the data
+mlp.fit(x_train,y_train)
+
+
+#prediting the data and calculating confusion matrix and classification error
+pred=mlp.predict(x_test)
+confusion_matrix(y_test,pred)
+print(classification_report(y_test,pred))
