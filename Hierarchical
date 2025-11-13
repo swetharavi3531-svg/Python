@@ -1,0 +1,18 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import dendrogram, linkage
+
+# Example data
+samples = np.array([[18],[22],[43],[42],[27],[25]])
+labels = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6']
+
+# Perform hierarchical clustering
+mergings = linkage(samples, method='complete')
+
+# Plot dendrogram
+plt.figure()
+dendrogram(mergings, labels=labels, leaf_rotation=90, leaf_font_size=6)
+plt.title('Cluster')
+plt.xlabel('Student Id')
+plt.ylabel('Marks')
+plt.show()
